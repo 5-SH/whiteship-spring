@@ -3,6 +3,7 @@ package com.seungho.springtestdemo;
 import com.seungho.springtestdemo.sample.SampleController;
 import com.seungho.springtestdemo.sample.SampleService;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.rule.OutputCapture;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -47,6 +49,9 @@ public class SampleControllerTest {
 //  @Autowired
 //  JacksonTester<SampleService> jsonTester;
 
+  @Rule
+  public OutputCapture outputCapture = new OutputCapture();
+
   @Test
   public void hello() throws Exception {
     when(mockSampleService.getName()).thenReturn("seungho");
@@ -62,5 +67,8 @@ public class SampleControllerTest {
 //    webTestClient.get().uri("/hello").exchange().expectStatus().isOk()
 //            .expectBody(String.class).isEqualTo("hello seungho");
 
+    assertThat(outputCapture.toString())
+            .contains("hello seungho 1")
+            .contains("hello seungho 2");
   }
 }
