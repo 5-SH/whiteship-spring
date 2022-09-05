@@ -1,6 +1,5 @@
 package com.seungho.springmvcdemo.user;
 
-import org.hamcrest.EasyMock2Matchers;
 import org.hamcrest.core.Is;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,5 +37,17 @@ public class UserControllerTest {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.username", Is.is("seungho")))
             .andExpect(jsonPath("$.password", Is.is("123456")));
+  }
+
+  @Test
+  public void createUser_XML() throws Exception {
+    String userJson = "{\"username\": \"seungho\", \"password\": \"123456\"}";
+    mockMvc.perform(post("/users/create")
+                    .contentType(MediaType.APPLICATION_JSON_UTF8)
+                    .accept(MediaType.APPLICATION_XML)
+                    .content(userJson))
+            .andExpect(status().isOk())
+            .andExpect(xpath("/User/username").string("seungho"))
+            .andExpect(xpath("/User/password").string("123456"));
   }
 }
