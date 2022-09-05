@@ -33,4 +33,15 @@ public class SampleControllerTest {
             .andExpect(model().attribute("name", is("seungho")))
             .andExpect(content().string(containsString("seungho")));
   }
+
+  @Autowired
+  WebClient webClient;
+
+  @Test
+  public void hello2() throws Exception {
+    HtmlPage page = webClient.getPage("/hello");
+    HtmlHeading1 h1 = page.getFirstByXPath("//h1");
+    Assertions.assertThat(h1.getTextContent()).isEqualToIgnoringCase("seungho");
+
+  }
 }
