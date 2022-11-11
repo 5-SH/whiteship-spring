@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 @RestController
 public class SpringcorsserverApplication {
-
-//	@CrossOrigin(origins = "http://localhost:18080")
+	// Origin = schema(http, https) + hostname + port
+	//	@CrossOrigin(origins = "http://localhost:18080")
 	@GetMapping("/hello")
 	public String hello() {
 		return "Hello";
